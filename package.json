@@ -1,0 +1,38 @@
+{
+	"name": "root",
+	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"devDependencies": {
+		"@trivago/prettier-plugin-sort-imports": "^4.3.0",
+		"@typescript-eslint/eslint-plugin": "^6.10.0",
+		"@typescript-eslint/parser": "^6.10.0",
+		"commit-message-validator": "^1.0.2",
+		"eslint": "^8.53.0",
+		"eslint-config-prettier": "^9.0.0",
+		"husky": "^8.0.3",
+		"lerna": "^7.4.2",
+		"prettier": "^3.0.3"
+	},
+	"scripts": {
+		"start:dev": "npx lerna run 'start:dev'",
+		"format": "npx lerna run 'format'",
+		"check:lint": "npx lerna run 'check:lint'",
+		"check:formatting": "npx lerna run 'check:formatting'",
+		"prepare": "husky install"
+	},
+	"config": {
+		"commit-message-validator": {
+			"_comment": "pattern can be Regex string or array of Regex string",
+			"pattern": "^(chore|docs|feature|bugfix|hotfix|refactor|revert|style|improve|release)/[\\w-]{1,30}:s?.{1,150}$",
+			"errorMessage": "Invalid commit message format. It should contain (chore|docs|feature|bugfix|hotfix|refactor|revert|style|improve|release)/(scope): message"
+		}
+	},
+	"lint-staged": {
+		"./**/*.{ts}": [
+			"bash -c 'npm run check:lint'"
+		],
+		"./**/*.{ts,tsx,js,jsx,json,html,mdx,css,scss}": "bash -c 'npm run check:formatting'"
+	}
+}
